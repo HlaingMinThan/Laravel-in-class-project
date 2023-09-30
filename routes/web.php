@@ -8,8 +8,9 @@ Route::get('/', function () {
         'blogs' => Blog::all()
     ]);
 });
+
 Route::get('/blogs/{slug}', function ($slug) {
     return view('blog', [
-        'blog' => Blog::find($slug)
+        'blog' => Blog::where('slug', $slug)->first()
     ]);
 });

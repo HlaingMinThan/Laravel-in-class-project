@@ -2,3 +2,7 @@ div.container {
     max-width: 800px;
     margin: auto;
 }
+
+footer {
+    background-color: red;
+}
