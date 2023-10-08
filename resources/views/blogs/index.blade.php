@@ -1,8 +1,5 @@
 <x-layout>
     <x-hero />
-    <x-blogs-section
-        :blogs="$blogs"
-        :categories="$categories"
-    />
+    <x-blogs-section :blogs="$blogs" />
     <x-subscribe />
 </x-layout>

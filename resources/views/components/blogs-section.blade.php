@@ -1,10 +1,11 @@
-@props(['blogs','categories'])
+@props(['blogs'])
 <section
     class="container text-center"
     id="blogs"
 >
     <h1 class="display-5 fw-bold mb-4">Blogs</h1>
     <div class="">
+        <x-category />
         <div class="dropdown">
             <button
                 class="btn btn-outline-primary dropdown-toggle"
@@ -13,15 +14,14 @@
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
             >
-                Filter By Category
+                Filter by date
             </button>
             <ul
                 class="dropdown-menu"
                 aria-labelledby="dropdownMenuButton1"
             >
-                @foreach ($categories as $category)
-                <li class="dropdown-item"><a href="/categories/{{$category->slug}}">{{$category->name}}</a></li>
-                @endforeach
+                <li class="dropdown-item"><a href="/?year={{date('Y')}}">This Year</a></li>
+                <li class="dropdown-item"><a href="/?year={{date('Y') - 1}}">Last Year</a></li>
             </ul>
         </div>
         {{-- <select
@@ -37,7 +37,22 @@
         method="GET"
         class="my-3"
     >
+
         <div class="input-group mb-3">
+            @if (request('category'))
+            <input
+                type="hidden"
+                name="category"
+                value="{{request('category')}}"
+            >
+            @endif
+            @if (request('author'))
+            <input
+                type="hidden"
+                name="author"
+                value="{{request('author')}}"
+            >
+            @endif
             <input
                 value="{{request('search')}}"
                 name="search"

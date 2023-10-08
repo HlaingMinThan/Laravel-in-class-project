@@ -10,12 +10,20 @@ class BlogController extends Controller
 
     public function index()
     {
-        $filters = request(['search', 'category']);
         return view('blogs.index', [
             'blogs' => Blog::with(['category', 'author'])
-                ->filter($filters)
-                ->latest()->paginate(6),
-            'categories' => Category::all()
+                ->filter(request(['search', 'category', 'author', 'year']))
+                ->latest()
+                ->paginate(6)
+                ->withQueryString(),
+        ]);
+    }
+
+    public function show(Blog $blog)
+    {
+        return view('blogs.show', [
+            'blog' => $blog,
+            'randomBlogs' => Blog::inRandomOrder()->take(3)->get()
         ]);
     }
 }

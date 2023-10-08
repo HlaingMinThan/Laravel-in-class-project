@@ -10,7 +10,7 @@
         <h3 class="card-title">{{$blog->title}}</h3>
         <p class="fs-6 text-secondary">
             <a
-                href="/users/{{$blog->author->username}}"">{{$blog->author->name}}</a>
+                href="/?author={{$blog->author->username}}{{request('category') ? '&category='.request('category') : '' }}{{request('search') ? '&search='.request('search') : '' }}"">{{$blog->author->name}}</a>
             <span> -{{$blog->created_at->diffForHumans()}}</span>
         </p>
         <div class="
