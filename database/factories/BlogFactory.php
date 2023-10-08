@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Blog;
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,7 +25,8 @@ class BlogFactory extends Factory
             'intro' => fake()->sentence(),
             'body' => fake()->paragraph(),
             'reading_time' => 3,
-            'category_id' => Category::factory()->create()
+            'category_id' => Category::factory()->create(),
+            'user_id' => User::factory()->create()
         ];
     }
 }
