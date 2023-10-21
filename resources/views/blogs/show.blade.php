@@ -13,15 +13,11 @@
                     <div>
                         @auth
                         <form
-                            action="{{route('blogs.toggle',$blog->slug)}}"
+                            action=""
                             method="POST"
                         >
                             @csrf
-                            @if ($blog->isSubscribed())
                             <button class="btn btn-danger">unsubscribe</button>
-                            @else
-                            <button class="btn btn-warning">subscribe</button>
-                            @endif
                         </form>
                         @endauth
                     </div>

@@ -10,8 +10,9 @@ class BlogController extends Controller
 
     public function index()
     {
+
         return view('blogs.index', [
-            'blogs' => Blog::with(['category', 'author'])
+            'blogs' => Blog::with(['category', 'author']) //eager loading
                 ->filter(request(['search', 'category', 'author', 'year']))
                 ->latest()
                 ->paginate(6)
@@ -23,7 +24,11 @@ class BlogController extends Controller
     {
         return view('blogs.show', [
             'blog' => $blog,
-            'randomBlogs' => Blog::inRandomOrder()->take(3)->get()
+            'randomBlogs' => cache()->remember('blogs.' . $blog->slug, now()->addSeconds(10), function () use ($blog) {
+                return Blog::inRandomOrder()->whereHas('category', function ($query) use ($blog) {
+                    $query->where('slug', $blog->category->slug);
+                })->take(3)->get();
+            })
         ]);
     }
 }
