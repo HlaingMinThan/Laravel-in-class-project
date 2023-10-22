@@ -48,4 +48,9 @@ class Blog extends Model
             $blogsQuery->whereYear('created_at', $year);
         }
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

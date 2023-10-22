@@ -25,8 +25,8 @@ class BlogFactory extends Factory
             'intro' => fake()->sentence(),
             'body' => fake()->paragraph(),
             'reading_time' => 3,
-            'category_id' => Category::factory()->create(),
-            'user_id' => User::factory()->create()
+            'category_id' => Category::factory(),
+            'user_id' => User::factory()
         ];
     }
 }

@@ -1,3 +1,7 @@
+@php
+$comments = $blog->comments()->latest()->paginate(4);
+@endphp
+
 <x-layout>
     <!-- single blog section -->
     <div class="container">
@@ -57,6 +61,31 @@
                     class="btn btn-primary my-3"
                 >Comment</button>
             </form>
+            <div>
+
+                @foreach ($comments as $comment)
+                <div class="card my-3 p-3">
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <img
+                                    src="https://d27v83ov1up738.cloudfront.net/user-profiles/c5e39OHKcKubU4JwnYiDWIYjLqdGQPlnNczC4fYn.jpg"
+                                    width="50"
+                                    width="50"
+                                >
+                            </div>
+                            <div class="ms-3">{{$comment->user->name}}</div>
+                        </div>
+                        <div>{{$comment->created_at->format('D-M-Y')}}</div>
+                    </div>
+                    <div class="card-body">
+                        {{$comment->body}}
+                    </div>
+                </div>
+                @endforeach
+                {{$comments->links()}}
+
+            </div>
         </div>
     </div>
     @endauth
