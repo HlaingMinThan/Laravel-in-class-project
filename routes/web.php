@@ -3,12 +3,24 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\SubscribeController;
 use App\Http\Middleware\AuthenticatedMiddleware;
+use App\Mail\SubscriberMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [BlogController::class, 'index'])->middleware('auth');
+Route::get('/', function () {
+    Mail::to('test123@gmail.com')->queue(new SubscriberMail('world'));
+    Mail::to('hmt123@gmail.com')->queue(new SubscriberMail('world'));
+    Mail::to('hmt125@gmail.com')->queue(new SubscriberMail('world'));
+    dd('email sent');
+})->middleware('auth');
 Route::get('/blogs/{blog:slug}', [BlogController::class, 'show']);
 Route::post('/blogs/{blog:slug}/comments', [CommentController::class, 'store']);
+Route::post('/blogs/{blog:slug}/handle-subscription', [SubscribeController::class, 'handleSubscription']);
+Route::get('/comments/{comment}/edit', [CommentController::class, 'edit']);
+Route::patch('/comments/{comment}/update', [CommentController::class, 'update']);
+Route::delete('/comments/{comment}', [CommentController::class, 'destroy']);
 Route::get('/login', [AuthController::class, 'login']);
 Route::post('/login', [AuthController::class, 'loginStore']);
 Route::get('/register', [AuthController::class, 'register']);

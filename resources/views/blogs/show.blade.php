@@ -17,11 +17,15 @@ $comments = $blog->comments()->latest()->paginate(4);
                     <div>
                         @auth
                         <form
-                            action=""
+                            action="/blogs/{{$blog->slug}}/handle-subscription"
                             method="POST"
                         >
                             @csrf
+                            @if (auth()->user()->isSubscribed($blog))
                             <button class="btn btn-danger">unsubscribe</button>
+                            @else
+                            <button class="btn btn-warning">subscribe</button>
+                            @endif
                         </form>
                         @endauth
                     </div>
@@ -81,6 +85,21 @@ $comments = $blog->comments()->latest()->paginate(4);
                     <div class="card-body">
                         {{$comment->body}}
                     </div>
+                    <a
+                        href="/comments/{{$comment->id}}/edit"
+                        class="btn-link btn btn-warning"
+                    >edit</a>
+                    <form
+                        action="/comments/{{$comment->id}}"
+                        method="POST"
+                    >
+                        @method('delete')
+                        @csrf
+                        <button
+                            class="btn btn-danger"
+                            type="submit"
+                        >delete</button>
+                    </form>
                 </div>
                 @endforeach
                 {{$comments->links()}}

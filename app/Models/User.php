@@ -65,4 +65,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function subscribedBlogs()
+    {
+        return $this->belongsToMany(Blog::class, 'blogs_users');
+    }
+
+    public function isSubscribed($blog)
+    {
+        return $this->subscribedBlogs->contains('id', $blog->id);
+    }
 }
