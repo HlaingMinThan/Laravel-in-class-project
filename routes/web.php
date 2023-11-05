@@ -16,6 +16,8 @@ Route::middleware(AdminMiddleware::class)->group(function () {
     Route::get('admin', [AdminController::class, 'index']);
     Route::get('/blogs/create', [BlogController::class, 'create']);
     Route::post('/blogs/store', [BlogController::class, 'store']);
+    Route::get('/blogs/{blog}/edit', [BlogController::class, 'edit']);
+    Route::patch('/blogs/{blog}/update', [BlogController::class, 'update']);
     Route::delete('/blogs/{blog}/delete', [BlogController::class, 'destroy']);
 });
 

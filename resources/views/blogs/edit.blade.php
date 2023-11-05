@@ -1,6 +1,7 @@
 <x-admin-layout>
     <x-blog-form
+        type="update"
+        :blog="$blog"
         :categories="$categories"
-        type="create"
     />
 </x-admin-layout>

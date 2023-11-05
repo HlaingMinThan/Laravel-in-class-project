@@ -4,10 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\File;
 
 class Blog extends Model
 {
     use HasFactory;
+
+    public static function boot()
+    {
+        parent::boot();
+        static::deleted(function ($item) {
+            if (File::exists(public_path($item->photo))) {
+                File::delete(public_path($item->photo));
+            }
+        });
+    }
 
     // protected $fillable = ['title', 'slug', 'intro', 'body'];
     // protected $guarded = ['id'];

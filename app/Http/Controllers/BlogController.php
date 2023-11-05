@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BlogFormRequest;
 use App\Models\Blog;
 use App\Models\Category;
+use Illuminate\Support\Facades\File;
 use Illuminate\Validation\Rule;
 
 class BlogController extends Controller
@@ -27,17 +29,9 @@ class BlogController extends Controller
         ]);
     }
 
-    public function store()
+    public function store(BlogFormRequest $request)
     {
-        $cleanData = request()->validate([
-            "title" => ['required', 'max:200'],
-            "photo" => ['required', 'image'],
-            "slug" => ['required', 'max:100'],
-            "intro" => ['required'],
-            "reading_time" => ['required'],
-            "body" => ['required'],
-            "category_id" => ['required', Rule::exists('categories', 'id')],
-        ]);
+        $cleanData = $request->validated();
         $cleanData['user_id'] = auth()->id();
         $cleanData['photo'] = '/storage/' . request('photo')->store('/blogs');
         Blog::create($cleanData);
@@ -54,6 +48,35 @@ class BlogController extends Controller
                 })->take(3)->get();
             })
         ]);
+    }
+
+    public function edit(Blog $blog)
+    {
+        return view('blogs.edit', [
+            'blog' => $blog,
+            'categories' => Category::all()
+        ]);
+    }
+
+    public function update(Blog $blog, BlogFormRequest $request)
+    {
+        $cleanData = $request->validated();
+        $blog->title = $cleanData['title'];
+        $blog->body = $cleanData['body'];
+        $blog->slug = $cleanData['slug'];
+        $blog->reading_time = $cleanData['reading_time'];
+        $blog->intro = $cleanData['intro'];
+        $blog->category_id = $cleanData['category_id'];
+
+        if ($file = request('photo')) {
+            if ($path = public_path($blog->photo)) {
+                File::delete($path);
+            }
+            $blog->photo =  '/storage/' . $file->store('/blogs');
+        }
+        $blog->update();
+
+        return redirect('/admin');
     }
 
     public function destroy(Blog $blog)
