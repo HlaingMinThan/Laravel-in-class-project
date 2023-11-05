@@ -1,19 +1,28 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\SubscribeController;
+use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\AuthenticatedMiddleware;
 use App\Mail\SubscriberMail;
+use App\Models\Blog;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
+Route::middleware(AdminMiddleware::class)->group(function () {
+    Route::get('admin', [AdminController::class, 'index']);
+    Route::get('/blogs/create', [BlogController::class, 'create']);
+    Route::post('/blogs/store', [BlogController::class, 'store']);
+    Route::delete('/blogs/{blog}/delete', [BlogController::class, 'destroy']);
+});
+
 Route::get('/', function () {
-    Mail::to('test123@gmail.com')->queue(new SubscriberMail('world'));
-    Mail::to('hmt123@gmail.com')->queue(new SubscriberMail('world'));
-    Mail::to('hmt125@gmail.com')->queue(new SubscriberMail('world'));
-    dd('email sent');
+    return view('blogs.index', [
+        'blogs' => Blog::filter(['search', 'category', 'username'])->latest()->paginate()
+    ]);
 })->middleware('auth');
 Route::get('/blogs/{blog:slug}', [BlogController::class, 'show']);
 Route::post('/blogs/{blog:slug}/comments', [CommentController::class, 'store']);
@@ -26,6 +35,8 @@ Route::post('/login', [AuthController::class, 'loginStore']);
 Route::get('/register', [AuthController::class, 'register']);
 Route::post('/register', [AuthController::class, 'registerStore']);
 Route::post('/logout', [AuthController::class, 'logout']);
+
+
 
 // list -> index       /products (GET)
 // single -> show       /products/{product} (GET)

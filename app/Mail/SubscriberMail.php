@@ -16,7 +16,7 @@ class SubscriberMail extends Mailable implements ShouldQueue
     /**
      * Create a new message instance.
      */
-    public function __construct(public $hello)
+    public function __construct(public $comment, public $subscriber)
     {
         //
     }
@@ -37,7 +37,7 @@ class SubscriberMail extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            view: 'mails.subscribermailasdfasdf',
+            view: 'mails.subscribermail',
         );
     }
 

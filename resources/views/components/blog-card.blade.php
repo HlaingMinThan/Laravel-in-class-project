@@ -2,7 +2,7 @@
 <div class="card">
     <img
         width="300"
-        src="https://d27v83ov1up738.cloudfront.net/blogs/9xQIWa4ErAgLhMRGVdbnEUQ6Ry5RsF0FwqhAin9m.png"
+        src="{{$blog->photo}}"
         class="card-img-top"
         alt="..."
     />
