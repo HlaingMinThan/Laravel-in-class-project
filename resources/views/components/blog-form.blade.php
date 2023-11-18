@@ -87,8 +87,7 @@
         <label for="exampleInputEmail1">Body</label>
         <textarea
             name="body"
-            class="form-control"
-            id=""
+            id="mytextarea"
             cols="30"
             rows="10"
         >{{old('body',$blog?->body)}}</textarea>

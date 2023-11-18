@@ -6,6 +6,7 @@ use App\Http\Requests\BlogFormRequest;
 use App\Models\Blog;
 use App\Models\Category;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
 class BlogController extends Controller

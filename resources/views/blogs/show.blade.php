@@ -35,7 +35,7 @@ $comments = $blog->comments()->latest()->paginate(4);
                     <div class="text-secondary">{{$blog->created_at->diffForHumans()}}</div>
                 </div>
                 <p class="lh-md mt-3">
-                    {{$blog->body}}
+                    {!!$blog->body!!}
                 </p>
             </div>
         </div>

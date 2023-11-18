@@ -18,6 +18,7 @@
         integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
         crossorigin="anonymous"
     />
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body id="home">
@@ -39,8 +40,6 @@
         integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
         crossorigin="anonymous"
     ></script>
-    <script src="/js/app.js"></script>
-
 </body>
 
 </html>

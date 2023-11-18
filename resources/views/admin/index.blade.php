@@ -20,10 +20,13 @@
                 <td>{{$blog->title}}</td>
                 <td>{{$blog->category->name}}</td>
                 <td>{{$blog->created_at->format('D-M-Y')}}</td>
+                @can('edit',$blog))
                 <td><a
                         class="btn btn-link btn-warning"
                         href="/blogs/{{$blog->id}}/edit"
                     >Edit</a></td>
+                @endcan
+                @can('delete',$blog))
                 <td>
                     <form
                         action="/blogs/{{$blog->id}}/delete"
@@ -37,6 +40,7 @@
                         >delete</button>
                     </form>
                 </td>
+                @endcan
             </tr>
             @endforeach
         </tbody>
