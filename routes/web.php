@@ -9,6 +9,7 @@ use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\AuthenticatedMiddleware;
 use App\Mail\SubscriberMail;
 use App\Models\Blog;
+use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
@@ -38,8 +39,6 @@ Route::post('/login', [AuthController::class, 'loginStore']);
 Route::get('/register', [AuthController::class, 'register']);
 Route::post('/register', [AuthController::class, 'registerStore']);
 Route::post('/logout', [AuthController::class, 'logout']);
-
-
 
 // list -> index       /products (GET)
 // single -> show       /products/{product} (GET)
